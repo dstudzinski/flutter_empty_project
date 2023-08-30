@@ -62,6 +62,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_cube:
+    dependency: transitive
+    description:
+      name: flutter_cube
+      sha256: "71cf679a251166eb97f86751c56582b09abdbf859485fbf60524948813914c3b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -107,6 +115,24 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  motion_sensors:
+    dependency: transitive
+    description:
+      path: "."
+      ref: aves
+      resolved-ref: fe840a13d0943f5afcc244c3b9f936e77bda2b8d
+      url: "https://github.com/deckerst/aves_panorama_motion_sensors.git"
+    source: git
+    version: "0.1.0"
+  panorama:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: aves
+      resolved-ref: baada6758628a2ee602e76d0088619ebb52316b4
+      url: "https://github.com/deckerst/aves_panorama.git"
+    source: git
+    version: "0.4.1"
   path:
     dependency: transitive
     description:
