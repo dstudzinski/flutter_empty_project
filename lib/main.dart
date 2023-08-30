@@ -29,6 +29,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Key _panoramaKey = Key('key');
   bool _generateNewKey = false;
   bool _useSmallImage = false;
+  bool _useBlankScreenWorkaround = false;
+  bool _showDummy = false;
 
   void _handleOnTap(double latitude, double longitude) {
     setState(() {
@@ -38,11 +40,27 @@ class _MyHomePageState extends State<MyHomePage> {
       if (_generateNewKey) {
         _panoramaKey = Key('$latitude $longitude');
       }
+
+      if (_useBlankScreenWorkaround) {
+        _showDummy = true;
+      }
+    });
+  }
+
+  void _showProperImage() {
+    setState(() {
+      _showDummy = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    Image image = _useBlankScreenWorkaround && _showDummy
+        ? Image.asset('assets/dummy.jpg')
+        : _useSmallImage
+            ? Image.asset('assets/panorama_small.jpg')
+            : Image.asset('assets/panorama_big.jpg');
+
     return Scaffold(
         body: Row(
       children: [
@@ -55,11 +73,12 @@ class _MyHomePageState extends State<MyHomePage> {
             key: _panoramaKey,
             latitude: _lat,
             longitude: _lon,
-            child: _useSmallImage
-                ? Image.asset('assets/panorama_small.jpg')
-                : Image.asset('assets/panorama_big.jpg'),
+            child: image,
             onTap: (double longitude, double latitude, double tilt) {
               _handleOnTap(latitude, longitude);
+            },
+            onViewChanged: (double longitude, double latitude, double tilt) {
+              _showProperImage();
             },
           ),
         ),
@@ -83,6 +102,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 onChanged: (bool? value) {
                   setState(() {
                     _useSmallImage = !_useSmallImage;
+                  });
+                },
+              ),
+              CheckboxListTile(
+                title: const Text('Use blank screen workaround?'),
+                value: _useBlankScreenWorkaround,
+                onChanged: (bool? value) {
+                  setState(() {
+                    _useBlankScreenWorkaround = !_useBlankScreenWorkaround;
                   });
                 },
               )
