@@ -2,33 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
-import 'package:vector_tile_renderer/vector_tile_renderer.dart' hide TileLayer;
+import 'package:vector_mbtiles/vector_mbtiles.dart';
+import 'package:vector_tile_renderer/vector_tile_renderer.dart';
+import 'package:vector_tile_renderer/vector_tile_renderer.dart'
+    as vector_tile_renderer;
 
-// ignore: uri_does_not_exist
-// import 'api_key.dart';
-
-const API_KEY = '';
+import 'osm_bright_ja_style.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'vector_map_tiles Example',
-      theme: ThemeData.light(),
-      home: const MyHomePage(title: 'vector_map_tiles Example'),
+      title: 'VectorMBTiles example',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'VectorMBTiles example'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
 
   final String title;
 
@@ -37,92 +57,63 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final MapController _controller = MapController();
-  Style? _style;
-  Object? _error;
-
-  @override
-  void initState() {
-    super.initState();
-    _initStyle();
-  }
-
-  void _initStyle() async {
-    try {
-      _style = await _readStyle();
-    } catch (e, stack) {
-      // ignore: avoid_print
-      print(e);
-      // ignore: avoid_print
-      print(stack);
-      _error = e;
-    }
-    setState(() {});
-  }
+  final MapController _mapController = MapController();
 
   @override
   Widget build(BuildContext context) {
-    final children = <Widget>[];
-    if (_error != null) {
-      children.add(Expanded(child: Text(_error!.toString())));
-    } else if (_style == null) {
-      children.add(const Center(child: CircularProgressIndicator()));
-    } else {
-      children.add(Flexible(child: _map(_style!)));
-      children.add(Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [_statusText()]));
-    }
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: SafeArea(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: children)));
+        body: Center(
+      // Center is a layout widget. It takes a single child and positions it
+      // in the middle of the parent.
+      child: FlutterMap(
+          mapController: _mapController,
+          options: MapOptions(
+            center: LatLng(35.917973, 14.409943),
+            zoom: 15,
+            maxZoom: 18,
+            // plugins: [VectorMapTilesPlugin()],
+          ),
+          children: [
+            VectorTileLayer(
+              key: const Key('VectorTileLayerWidget'),
+              theme: _mapTheme(context),
+              tileProviders: TileProviders(
+                  {'openmaptiles': _cachingTileProvider(_basemapPath())}),
+            ),
+          ]),
+    ));
   }
+}
 
-// alternates:
-//   Mapbox - mapbox://styles/mapbox/streets-v12?access_token={key}
-//   Maptiler - https://api.maptiler.com/maps/outdoor/style.json?key={key}
-//   Stadia Maps - https://tiles.stadiamaps.com/styles/outdoors.json?api_key={key}
-  Future<Style> _readStyle() => StyleReader(
-          uri: 'https://api.maptiler.com/maps/outdoor/style.json?key=$API_KEY',
-          // ignore: undefined_identifier
-          // apiKey: mapboxApiKey,
-          logger: const Logger.console())
-      .read();
+VectorTileProvider _cachingTileProvider(String mbtilesPath) {
+  return MemoryCacheVectorTileProvider(
+      delegate: VectorMBTilesProvider(
+          mbtilesPath: mbtilesPath,
+          // this is the maximum zoom of the provider, not the
+          // maximum of the map. vector tiles are rendered
+          // to larger sizes to support higher zoom levels
+          maximumZoom: 14),
+      maxSizeBytes: 1024 * 1024 * 2);
+}
 
-  Widget _map(Style style) => FlutterMap(
-        mapController: _controller,
-        options: MapOptions(
-            center: style.center ?? const LatLng(49.246292, -123.116226),
-            zoom: style.zoom ?? 10,
-            maxZoom: 22,
-            interactiveFlags: InteractiveFlag.drag |
-                InteractiveFlag.flingAnimation |
-                InteractiveFlag.pinchMove |
-                InteractiveFlag.pinchZoom |
-                InteractiveFlag.doubleTapZoom),
-        children: [
-          VectorTileLayer(
-              tileProviders: style.providers,
-              theme: style.theme,
-              sprites: style.sprites,
-              maximumZoom: 22,
-              tileOffset: TileOffset.mapbox,
-              layerMode: VectorTileLayerMode.vector)
-        ],
-      );
+_mapTheme(BuildContext context) {
+  // maps are rendered using themes
+  // to provide a dark theme do something like this:
+  // if (MediaQuery.of(context).platformBrightness == Brightness.dark) return myDarkTheme();
+  return OSMBrightTheme.osmBrightJaTheme();
+}
 
-  Widget _statusText() => Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 8),
-      child: StreamBuilder(
-          stream: _controller.mapEventStream,
-          builder: (context, snapshot) {
-            return Text(
-                'Zoom: ${_controller.zoom.toStringAsFixed(2)} Center: ${_controller.center.latitude.toStringAsFixed(4)},${_controller.center.longitude.toStringAsFixed(4)}');
-          }));
+extension OSMBrightTheme on ProvidedThemes {
+  static vector_tile_renderer.Theme osmBrightJaTheme({Logger? logger}) =>
+      ThemeReader(logger: logger).read(osmBrightJaStyle());
+}
+
+String _basemapPath() {
+  return 'assets/databases/malta.mbtiles';
 }

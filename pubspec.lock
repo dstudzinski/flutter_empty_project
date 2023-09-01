@@ -53,10 +53,10 @@ packages:
     dependency: transitive
     description:
       name: executor_lib
-      sha256: "544889daa5726462657dab6410b75f2f8e3a77479d85b307a25c346e243bc38e"
+      sha256: "0bd5c9fe0dfe0f6ab058c94515c387a169e518f94173e08a372d3ea8dd05def3"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.1"
+    version: "0.2.1"
   fake_async:
     dependency: transitive
     description:
@@ -98,10 +98,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_map
-      sha256: "5286f72f87deb132daa1489442d6cc46e986fc105cb727d9ae1b602b35b1d1f3"
+      sha256: "95e2b3ae37733c3da79aac6e5a245a524113d652d8e22bc5a5230d61d6db0175"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0"
+    version: "3.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -111,10 +111,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
+      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "0.13.6"
   http_parser:
     dependency: transitive
     description:
@@ -135,10 +135,10 @@ packages:
     dependency: "direct main"
     description:
       name: latlong2
-      sha256: "18712164760cee655bc790122b0fd8f3d5b3c36da2cb7bf94b68a197fbb0811b"
+      sha256: "4766bcc84df3d42fa6f42e77eb37d51781068325fd3c6798c947fc418c9a0b0e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.0"
+    version: "0.8.0"
   lints:
     dependency: transitive
     description:
@@ -267,6 +267,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  positioned_tap_detector_2:
+    dependency: transitive
+    description:
+      name: positioned_tap_detector_2
+      sha256: "52e06863ad3e1f82b058fd05054fc8c9caeeb3b47d5cea7a24bd9320746059c1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
   proj4dart:
     dependency: transitive
     description:
@@ -296,6 +304,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  sqflite:
+    dependency: transitive
+    description:
+      name: sqflite
+      sha256: "591f1602816e9c31377d5f008c2d9ef7b8aca8941c3f89cc5fd9d84da0c38a9a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
+  sqflite_common:
+    dependency: transitive
+    description:
+      name: sqflite_common
+      sha256: "1b92f368f44b0dee2425bb861cfa17b6f6cf3961f762ff6f941d20b33355660a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.0"
   stack_trace:
     dependency: transitive
     description:
@@ -320,6 +344,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  synchronized:
+    dependency: transitive
+    description:
+      name: synchronized
+      sha256: "5fcbd27688af6082f5abd611af56ee575342c30e87541d0245f7ff99faa02c60"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   term_glyph:
     dependency: transitive
     description:
@@ -336,6 +368,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.0"
+  tuple:
+    dependency: transitive
+    description:
+      name: tuple
+      sha256: a97ce2013f240b2f3807bcbaf218765b6f301c3eff91092bcfa23a039e7dd151
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   typed_data:
     dependency: transitive
     description:
@@ -356,10 +396,10 @@ packages:
     dependency: "direct main"
     description:
       name: vector_map_tiles
-      sha256: fbc94dc080d7431d8c2c782cb8937a3bc48079c624f996322e36ade6935761e1
+      sha256: a0411b32ec4a8b548eb2fdf74d0e1165310e86415c3a7a26459cedf0d4fd1bc0
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0"
+    version: "3.1.4"
   vector_math:
     dependency: transitive
     description:
@@ -368,6 +408,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  vector_mbtiles:
+    dependency: "direct main"
+    description:
+      name: vector_mbtiles
+      sha256: e0c79e9a91b8a51dfac01cc42704814a6e2df80cc9e3c6cb24bee29c7201b97d
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
   vector_tile:
     dependency: transitive
     description:
@@ -380,10 +428,10 @@ packages:
     dependency: transitive
     description:
       name: vector_tile_renderer
-      sha256: de212da0f5e48107d3b763a940a428eb1f49d8a4664d41ac0b654f77209a2d0b
+      sha256: "53219efabfcc83053b860c81fba22b9c974028a9ca3be214e5fb00d0e2b0487b"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "3.2.1"
   web:
     dependency: transitive
     description:
@@ -418,4 +466,4 @@ packages:
     version: "1.0.3"
 sdks:
   dart: ">=3.1.0 <4.0.0"
-  flutter: ">=3.10.0"
+  flutter: ">=3.7.0"
