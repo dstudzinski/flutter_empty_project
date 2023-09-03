@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mapController: _mapController,
           options: MapOptions(
             center: LatLng(35.917973, 14.409943),
-            zoom: 15,
+            zoom: 11,
             maxZoom: 18,
             // plugins: [VectorMapTilesPlugin()],
           ),
@@ -115,5 +115,5 @@ extension OSMBrightTheme on ProvidedThemes {
 }
 
 String _basemapPath() {
-  return 'assets/databases/malta.mbtiles';
+  return 'assets/maps/malta.mbtiles';
 }
