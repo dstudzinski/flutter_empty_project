@@ -24,7 +24,7 @@ Map<String, dynamic> osmBrightJaStyle() {
     "bearing": 0,
     "pitch": 0,
     "sources": {
-      "openmaptiles": {"type": "vector", "url": "mbtiles://malta.mbtiles"},
+      "openmaptiles": {"type": "vector", "url": "mbtiles://japan.mbtiles"},
       "takeshima": {"type": "vector", "url": "mbtiles://takeshima.mbtiles"},
       "hoppo": {"type": "vector", "url": "mbtiles://hoppo.mbtiles"}
     },
